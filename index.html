@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Es6features by duyetdev-collections</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Es6features</h1>
+      <h2 class="project-tagline">Overview of ECMAScript 6 features</h2>
+      <a href="https://github.com/duyetdev-collections/es6features" class="btn">View on GitHub</a>
+      <a href="https://github.com/duyetdev-collections/es6features/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/duyetdev-collections/es6features/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="ecmascript-6-gitioes6features" class="anchor" href="#ecmascript-6-gitioes6features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ECMAScript 6 <sup><a href="http://git.io/es6features">git.io/es6features</a></sup>
+</h1>
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>ECMAScript 6, also known as ECMAScript 2015, is the latest version of the ECMAScript standard.  ES6 is a significant update to the language, and the first update to the language since ES5 was standardized in 2009. Implementation of these features in major JavaScript engines is <a href="http://kangax.github.io/es5-compat-table/es6/">underway now</a>.</p>
+
+<p>See the <a href="http://www.ecma-international.org/ecma-262/6.0/">ES6 standard</a> for full specification of the ECMAScript 6 language.</p>
+
+<p>ES6 includes the following new features:</p>
+
+<ul>
+<li><a href="#arrows">arrows</a></li>
+<li><a href="#classes">classes</a></li>
+<li><a href="#enhanced-object-literals">enhanced object literals</a></li>
+<li><a href="#template-strings">template strings</a></li>
+<li><a href="#destructuring">destructuring</a></li>
+<li><a href="#default--rest--spread">default + rest + spread</a></li>
+<li><a href="#let--const">let + const</a></li>
+<li><a href="#iterators--forof">iterators + for..of</a></li>
+<li><a href="#generators">generators</a></li>
+<li><a href="#unicode">unicode</a></li>
+<li><a href="#modules">modules</a></li>
+<li><a href="#module-loaders">module loaders</a></li>
+<li><a href="#map--set--weakmap--weakset">map + set + weakmap + weakset</a></li>
+<li><a href="#proxies">proxies</a></li>
+<li><a href="#symbols">symbols</a></li>
+<li><a href="#subclassable-built-ins">subclassable built-ins</a></li>
+<li><a href="#promises">promises</a></li>
+<li><a href="#math--number--string--array--object-apis">math + number + string + array + object APIs</a></li>
+<li><a href="#binary-and-octal-literals">binary and octal literals</a></li>
+<li><a href="#reflect-api">reflect api</a></li>
+<li><a href="#tail-calls">tail calls</a></li>
+</ul>
+
+<h2>
+<a id="ecmascript-6-features" class="anchor" href="#ecmascript-6-features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ECMAScript 6 Features</h2>
+
+<h3>
+<a id="arrows" class="anchor" href="#arrows" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arrows</h3>
+
+<p>Arrows are a function shorthand using the <code>=&gt;</code> syntax.  They are syntactically similar to the related feature in C#, Java 8 and CoffeeScript.  They support both statement block bodies as well as expression bodies which return the value of the expression.  Unlike functions, arrows share the same lexical <code>this</code> as their surrounding code.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Expression bodies</span>
+<span class="pl-k">var</span> odds <span class="pl-k">=</span> <span class="pl-smi">evens</span>.<span class="pl-en">map</span>(v <span class="pl-k">=&gt;</span> v <span class="pl-k">+</span> <span class="pl-c1">1</span>);
+<span class="pl-k">var</span> nums <span class="pl-k">=</span> <span class="pl-smi">evens</span>.<span class="pl-en">map</span>((<span class="pl-smi">v</span>, <span class="pl-smi">i</span>) <span class="pl-k">=&gt;</span> v <span class="pl-k">+</span> i);
+<span class="pl-k">var</span> pairs <span class="pl-k">=</span> <span class="pl-smi">evens</span>.<span class="pl-en">map</span>(v <span class="pl-k">=&gt;</span> ({even<span class="pl-k">:</span> v, odd<span class="pl-k">:</span> v <span class="pl-k">+</span> <span class="pl-c1">1</span>}));
+
+<span class="pl-c">// Statement bodies</span>
+<span class="pl-smi">nums</span>.<span class="pl-en">forEach</span>(v <span class="pl-k">=&gt;</span> {
+  <span class="pl-k">if</span> (v <span class="pl-k">%</span> <span class="pl-c1">5</span> <span class="pl-k">===</span> <span class="pl-c1">0</span>)
+    <span class="pl-smi">fives</span>.<span class="pl-c1">push</span>(v);
+});
+
+<span class="pl-c">// Lexical this</span>
+<span class="pl-k">var</span> bob <span class="pl-k">=</span> {
+  _name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Bob<span class="pl-pds">"</span></span>,
+  _friends<span class="pl-k">:</span> [],
+  <span class="pl-en">printFriends</span>() {
+    <span class="pl-v">this</span>.<span class="pl-smi">_friends</span>.<span class="pl-en">forEach</span>(f <span class="pl-k">=&gt;</span>
+      <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-v">this</span>.<span class="pl-smi">_name</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> knows <span class="pl-pds">"</span></span> <span class="pl-k">+</span> f));
+  }
+}</pre></div>
+
+<h3>
+<a id="classes" class="anchor" href="#classes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Classes</h3>
+
+<p>ES6 classes are a simple sugar over the prototype-based OO pattern.  Having a single convenient declarative form makes class patterns easier to use, and encourages interoperability.  Classes support prototype-based inheritance, super calls, instance and static methods and constructors.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">class</span> <span class="pl-en">SkinnedMesh</span> <span class="pl-k">extends</span> <span class="pl-en">THREE</span>.<span class="pl-smi">Mesh</span> {
+  <span class="pl-en">constructor</span>(<span class="pl-smi">geometry</span>, <span class="pl-smi">materials</span>) {
+    <span class="pl-v">super</span>(geometry, materials);
+
+    <span class="pl-v">this</span>.<span class="pl-smi">idMatrix</span> <span class="pl-k">=</span> <span class="pl-smi">SkinnedMesh</span>.<span class="pl-en">defaultMatrix</span>();
+    <span class="pl-v">this</span>.<span class="pl-smi">bones</span> <span class="pl-k">=</span> [];
+    <span class="pl-v">this</span>.<span class="pl-smi">boneMatrices</span> <span class="pl-k">=</span> [];
+    <span class="pl-c">//...</span>
+  }
+  <span class="pl-en">update</span>(<span class="pl-smi">camera</span>) {
+    <span class="pl-c">//...</span>
+    <span class="pl-v">super</span>.<span class="pl-en">update</span>();
+  }
+  get <span class="pl-en">boneCount</span>() {
+    <span class="pl-k">return</span> <span class="pl-v">this</span>.<span class="pl-smi">bones</span>.<span class="pl-c1">length</span>;
+  }
+  set <span class="pl-en">matrixType</span>(<span class="pl-smi">matrixType</span>) {
+    <span class="pl-v">this</span>.<span class="pl-smi">idMatrix</span> <span class="pl-k">=</span> SkinnedMesh[matrixType]();
+  }
+  <span class="pl-k">static</span> <span class="pl-en">defaultMatrix</span>() {
+    <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">THREE.Matrix4</span>();
+  }
+}</pre></div>
+
+<h3>
+<a id="enhanced-object-literals" class="anchor" href="#enhanced-object-literals" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enhanced Object Literals</h3>
+
+<p>Object literals are extended to support setting the prototype at construction, shorthand for <code>foo: foo</code> assignments, defining methods, making super calls, and computing property names with expressions.  Together, these also bring object literals and class declarations closer together, and let object-based design benefit from some of the same conveniences.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> obj <span class="pl-k">=</span> {
+    <span class="pl-c">// __proto__</span>
+    __proto__<span class="pl-k">:</span> theProtoObj,
+    <span class="pl-c">// Shorthand for ‘handler: handler’</span>
+    handler,
+    <span class="pl-c">// Methods</span>
+    <span class="pl-en">toString</span>() {
+     <span class="pl-c">// Super calls</span>
+     <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">"</span>d <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-v">super</span>.<span class="pl-c1">toString</span>();
+    },
+    <span class="pl-c">// Computed (dynamic) property names</span>
+    [ <span class="pl-s"><span class="pl-pds">'</span>prop_<span class="pl-pds">'</span></span> <span class="pl-k">+</span> (() <span class="pl-k">=&gt;</span> <span class="pl-c1">42</span>)() ]<span class="pl-k">:</span> <span class="pl-c1">42</span>
+};</pre></div>
+
+<h3>
+<a id="template-strings" class="anchor" href="#template-strings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Template Strings</h3>
+
+<p>Template strings provide syntactic sugar for constructing strings.  This is similar to string interpolation features in Perl, Python and more.  Optionally, a tag can be added to allow the string construction to be customized, avoiding injection attacks or constructing higher level data structures from string contents.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Basic literal string creation</span>
+<span class="pl-s"><span class="pl-pds">`</span>In JavaScript '<span class="pl-cce">\n</span>' is a line-feed.<span class="pl-pds">`</span></span>
+
+<span class="pl-c">// Multiline strings</span>
+<span class="pl-s"><span class="pl-pds">`</span>In JavaScript this is</span>
+<span class="pl-s"> not legal.<span class="pl-pds">`</span></span>
+
+<span class="pl-c">// String interpolation</span>
+<span class="pl-k">var</span> name <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Bob<span class="pl-pds">"</span></span>, time <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>today<span class="pl-pds">"</span></span>;
+<span class="pl-s"><span class="pl-pds">`</span>Hello <span class="pl-s1"><span class="pl-pse">${</span>name<span class="pl-pse">}</span></span>, how are you <span class="pl-s1"><span class="pl-pse">${</span>time<span class="pl-pse">}</span></span>?<span class="pl-pds">`</span></span>
+
+<span class="pl-c">// Construct an HTTP request prefix is used to interpret the replacements and construction</span>
+<span class="pl-c1">POST</span><span class="pl-s"><span class="pl-pds">`</span>http://foo.org/bar?a=<span class="pl-s1"><span class="pl-pse">${</span>a<span class="pl-pse">}</span></span>&amp;b=<span class="pl-s1"><span class="pl-pse">${</span>b<span class="pl-pse">}</span></span></span>
+<span class="pl-s">     Content-Type: application/json</span>
+<span class="pl-s">     X-Credentials: <span class="pl-s1"><span class="pl-pse">${</span>credentials<span class="pl-pse">}</span></span></span>
+<span class="pl-s">     { "foo": <span class="pl-s1"><span class="pl-pse">${</span>foo<span class="pl-pse">}</span></span>,</span>
+<span class="pl-s">       "bar": <span class="pl-s1"><span class="pl-pse">${</span>bar<span class="pl-pse">}</span></span>}<span class="pl-pds">`</span></span>(myOnReadyStateChangeHandler);</pre></div>
+
+<h3>
+<a id="destructuring" class="anchor" href="#destructuring" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Destructuring</h3>
+
+<p>Destructuring allows binding using pattern matching, with support for matching arrays and objects.  Destructuring is fail-soft, similar to standard object lookup <code>foo["bar"]</code>, producing <code>undefined</code> values when not found.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// list matching</span>
+<span class="pl-k">var</span> [a, , b] <span class="pl-k">=</span> [<span class="pl-c1">1</span>,<span class="pl-c1">2</span>,<span class="pl-c1">3</span>];
+
+<span class="pl-c">// object matching</span>
+<span class="pl-k">var</span> { op<span class="pl-k">:</span> a, lhs<span class="pl-k">:</span> { op<span class="pl-k">:</span> b }, rhs<span class="pl-k">:</span> c }
+       <span class="pl-k">=</span> <span class="pl-en">getASTNode</span>()
+
+<span class="pl-c">// object matching shorthand</span>
+<span class="pl-c">// binds `op`, `lhs` and `rhs` in scope</span>
+<span class="pl-k">var</span> {op, lhs, rhs} <span class="pl-k">=</span> <span class="pl-en">getASTNode</span>()
+
+<span class="pl-c">// Can be used in parameter position</span>
+<span class="pl-k">function</span> <span class="pl-en">g</span>({<span class="pl-smi">name</span>: <span class="pl-smi">x</span>}) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(x);
+}
+<span class="pl-en">g</span>({name<span class="pl-k">:</span> <span class="pl-c1">5</span>})
+
+<span class="pl-c">// Fail-soft destructuring</span>
+<span class="pl-k">var</span> [a] <span class="pl-k">=</span> [];
+a <span class="pl-k">===</span> <span class="pl-c1">undefined</span>;
+
+<span class="pl-c">// Fail-soft destructuring with defaults</span>
+<span class="pl-k">var</span> [a <span class="pl-k">=</span> <span class="pl-c1">1</span>] <span class="pl-k">=</span> [];
+a <span class="pl-k">===</span> <span class="pl-c1">1</span>;</pre></div>
+
+<h3>
+<a id="default--rest--spread" class="anchor" href="#default--rest--spread" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Default + Rest + Spread</h3>
+
+<p>Callee-evaluated default parameter values.  Turn an array into consecutive arguments in a function call.  Bind trailing parameters to an array.  Rest replaces the need for <code>arguments</code> and addresses common cases more directly.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">f</span>(<span class="pl-smi">x</span>, <span class="pl-smi">y</span><span class="pl-k">=</span><span class="pl-c1">12</span>) {
+  <span class="pl-c">// y is 12 if not passed (or passed as undefined)</span>
+  <span class="pl-k">return</span> x <span class="pl-k">+</span> y;
+}
+<span class="pl-en">f</span>(<span class="pl-c1">3</span>) <span class="pl-k">==</span> <span class="pl-c1">15</span></pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">f</span>(<span class="pl-smi">x</span>, ...<span class="pl-smi">y</span>) {
+  <span class="pl-c">// y is an Array</span>
+  <span class="pl-k">return</span> x <span class="pl-k">*</span> <span class="pl-smi">y</span>.<span class="pl-c1">length</span>;
+}
+<span class="pl-en">f</span>(<span class="pl-c1">3</span>, <span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>, <span class="pl-c1">true</span>) <span class="pl-k">==</span> <span class="pl-c1">6</span></pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">f</span>(<span class="pl-smi">x</span>, <span class="pl-smi">y</span>, <span class="pl-smi">z</span>) {
+  <span class="pl-k">return</span> x <span class="pl-k">+</span> y <span class="pl-k">+</span> z;
+}
+<span class="pl-c">// Pass each elem of array as argument</span>
+<span class="pl-en">f</span>(<span class="pl-k">...</span>[<span class="pl-c1">1</span>,<span class="pl-c1">2</span>,<span class="pl-c1">3</span>]) <span class="pl-k">==</span> <span class="pl-c1">6</span></pre></div>
+
+<h3>
+<a id="let--const" class="anchor" href="#let--const" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Let + Const</h3>
+
+<p>Block-scoped binding constructs.  <code>let</code> is the new <code>var</code>.  <code>const</code> is single-assignment.  Static restrictions prevent use before assignment.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">f</span>() {
+  {
+    <span class="pl-k">let</span> x;
+    {
+      <span class="pl-c">// okay, block scoped name</span>
+      <span class="pl-k">const</span> <span class="pl-c1">x</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>sneaky<span class="pl-pds">"</span></span>;
+      <span class="pl-c">// error, const</span>
+      x <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>foo<span class="pl-pds">"</span></span>;
+    }
+    <span class="pl-c">// error, already declared in block</span>
+    <span class="pl-k">let</span> x <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>inner<span class="pl-pds">"</span></span>;
+  }
+}</pre></div>
+
+<h3>
+<a id="iterators--forof" class="anchor" href="#iterators--forof" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Iterators + For..Of</h3>
+
+<p>Iterator objects enable custom iteration like CLR IEnumerable or Java Iterable.  Generalize <code>for..in</code> to custom iterator-based iteration with <code>for..of</code>.  Don’t require realizing an array, enabling lazy design patterns like LINQ.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">let</span> fibonacci <span class="pl-k">=</span> {
+  [<span class="pl-c1">Symbol</span>.<span class="pl-smi">iterator</span>]() {
+    <span class="pl-k">let</span> pre <span class="pl-k">=</span> <span class="pl-c1">0</span>, cur <span class="pl-k">=</span> <span class="pl-c1">1</span>;
+    <span class="pl-k">return</span> {
+      <span class="pl-en">next</span>() {
+        [pre, cur] <span class="pl-k">=</span> [cur, pre <span class="pl-k">+</span> cur];
+        <span class="pl-k">return</span> { done<span class="pl-k">:</span> <span class="pl-c1">false</span>, value<span class="pl-k">:</span> cur }
+      }
+    }
+  }
+}
+
+<span class="pl-k">for</span> (<span class="pl-k">var</span> n <span class="pl-k">of</span> fibonacci) {
+  <span class="pl-c">// truncate the sequence at 1000</span>
+  <span class="pl-k">if</span> (n <span class="pl-k">&gt;</span> <span class="pl-c1">1000</span>)
+    <span class="pl-k">break</span>;
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(n);
+}</pre></div>
+
+<p>Iteration is based on these duck-typed interfaces (using <a href="http://typescriptlang.org">TypeScript</a> type syntax for exposition only):</p>
+
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">interface</span> <span class="pl-en">IteratorResult</span> {
+  <span class="pl-v">done</span>: <span class="pl-k">boolean</span>;
+  <span class="pl-v">value</span>: <span class="pl-k">any</span>;
+}
+<span class="pl-k">interface</span> <span class="pl-en">Iterator</span> {
+  <span class="pl-en">next</span>(): IteratorResult;
+}
+<span class="pl-k">interface</span> <span class="pl-en">Iterable</span> {
+  [Symbol.iterator](): Iterator
+}</pre></div>
+
+<h3>
+<a id="generators" class="anchor" href="#generators" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Generators</h3>
+
+<p>Generators simplify iterator-authoring using <code>function*</code> and <code>yield</code>.  A function declared as function* returns a Generator instance.  Generators are subtypes of iterators which include additional  <code>next</code> and <code>throw</code>.  These enable values to flow back into the generator, so <code>yield</code> is an expression form which returns a value (or throws).</p>
+
+<p>Note: Can also be used to enable ‘await’-like async programming, see also ES7 <code>await</code> proposal.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> fibonacci <span class="pl-k">=</span> {
+  [<span class="pl-c1">Symbol</span>.<span class="pl-smi">iterator</span>]<span class="pl-k">:</span> <span class="pl-k">function*</span>() {
+    <span class="pl-k">var</span> pre <span class="pl-k">=</span> <span class="pl-c1">0</span>, cur <span class="pl-k">=</span> <span class="pl-c1">1</span>;
+    <span class="pl-k">for</span> (;;) {
+      <span class="pl-k">var</span> temp <span class="pl-k">=</span> pre;
+      pre <span class="pl-k">=</span> cur;
+      cur <span class="pl-k">+=</span> temp;
+      <span class="pl-k">yield</span> cur;
+    }
+  }
+}
+
+<span class="pl-k">for</span> (<span class="pl-k">var</span> n <span class="pl-k">of</span> fibonacci) {
+  <span class="pl-c">// truncate the sequence at 1000</span>
+  <span class="pl-k">if</span> (n <span class="pl-k">&gt;</span> <span class="pl-c1">1000</span>)
+    <span class="pl-k">break</span>;
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(n);
+}</pre></div>
+
+<p>The generator interface is (using <a href="http://typescriptlang.org">TypeScript</a> type syntax for exposition only):</p>
+
+<div class="highlight highlight-source-ts"><pre><span class="pl-k">interface</span> <span class="pl-en">Generator</span> <span class="pl-k">extends</span> <span class="pl-k">Iterator</span> {
+    <span class="pl-en">next</span>(<span class="pl-v">value</span><span class="pl-k">?</span>: <span class="pl-k">any</span>): IteratorResult;
+    <span class="pl-en">throw</span>(<span class="pl-v">exception</span>: <span class="pl-k">any</span>);
+}</pre></div>
+
+<h3>
+<a id="unicode" class="anchor" href="#unicode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Unicode</h3>
+
+<p>Non-breaking additions to support full Unicode, including new Unicode literal form in strings and new RegExp <code>u</code> mode to handle code points, as well as new APIs to process strings at the 21bit code points level.  These additions support building global apps in JavaScript.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// same as ES5.1</span>
+<span class="pl-s"><span class="pl-pds">"</span>𠮷<span class="pl-pds">"</span></span>.<span class="pl-c1">length</span> <span class="pl-k">==</span> <span class="pl-c1">2</span>
+
+<span class="pl-c">// new RegExp behaviour, opt-in ‘u’</span>
+<span class="pl-s"><span class="pl-pds">"</span>𠮷<span class="pl-pds">"</span></span>.<span class="pl-c1">match</span>(<span class="pl-sr"><span class="pl-pds">/</span><span class="pl-c1">.</span><span class="pl-pds">/</span>u</span>)[<span class="pl-c1">0</span>].<span class="pl-c1">length</span> <span class="pl-k">==</span> <span class="pl-c1">2</span>
+
+<span class="pl-c">// new form</span>
+<span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\u</span>{20BB7}<span class="pl-pds">"</span></span><span class="pl-k">==</span><span class="pl-s"><span class="pl-pds">"</span>𠮷<span class="pl-pds">"</span></span><span class="pl-k">==</span><span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\u</span>D842<span class="pl-cce">\u</span>DFB7<span class="pl-pds">"</span></span>
+
+<span class="pl-c">// new String ops</span>
+<span class="pl-s"><span class="pl-pds">"</span>𠮷<span class="pl-pds">"</span></span>.<span class="pl-en">codePointAt</span>(<span class="pl-c1">0</span>) <span class="pl-k">==</span> <span class="pl-c1">0x20BB7</span>
+
+<span class="pl-c">// for-of iterates code points</span>
+<span class="pl-k">for</span>(<span class="pl-k">var</span> c <span class="pl-k">of</span> <span class="pl-s"><span class="pl-pds">"</span>𠮷<span class="pl-pds">"</span></span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(c);
+}</pre></div>
+
+<h3>
+<a id="modules" class="anchor" href="#modules" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Modules</h3>
+
+<p>Language-level support for modules for component definition.  Codifies patterns from popular JavaScript module loaders (AMD, CommonJS). Runtime behaviour defined by a host-defined default loader.  Implicitly async model – no code executes until requested modules are available and processed.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// lib/math.js</span>
+<span class="pl-k">export</span> <span class="pl-k">function</span> <span class="pl-en">sum</span>(<span class="pl-smi">x</span>, <span class="pl-smi">y</span>) {
+  <span class="pl-k">return</span> x <span class="pl-k">+</span> y;
+}
+<span class="pl-k">export</span> <span class="pl-k">var</span> pi <span class="pl-k">=</span> <span class="pl-c1">3.141593</span>;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// app.js</span>
+<span class="pl-k">import</span> <span class="pl-v">*</span> <span class="pl-k">as</span> <span class="pl-smi">math</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>lib/math<span class="pl-pds">"</span></span>;
+<span class="pl-en">alert</span>(<span class="pl-s"><span class="pl-pds">"</span>2π = <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">math</span>.<span class="pl-en">sum</span>(<span class="pl-smi">math</span>.<span class="pl-smi">pi</span>, <span class="pl-smi">math</span>.<span class="pl-smi">pi</span>));</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// otherApp.js</span>
+<span class="pl-k">import</span> {<span class="pl-smi">sum</span>, <span class="pl-smi">pi</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>lib/math<span class="pl-pds">"</span></span>;
+<span class="pl-en">alert</span>(<span class="pl-s"><span class="pl-pds">"</span>2π = <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-en">sum</span>(pi, pi));</pre></div>
+
+<p>Some additional features include <code>export default</code> and <code>export *</code>:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// lib/mathplusplus.js</span>
+<span class="pl-k">export</span> <span class="pl-v">*</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>lib/math<span class="pl-pds">"</span></span>;
+<span class="pl-k">export</span> <span class="pl-k">var</span> e <span class="pl-k">=</span> <span class="pl-c1">2.71828182846</span>;
+<span class="pl-k">export</span> <span class="pl-v">default</span> <span class="pl-k">function</span>(<span class="pl-smi">x</span>) {
+    <span class="pl-k">return</span> <span class="pl-c1">Math</span>.<span class="pl-c1">log</span>(x);
+}</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// app.js</span>
+<span class="pl-k">import</span> <span class="pl-smi">ln</span>, {<span class="pl-smi">pi</span>, <span class="pl-smi">e</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>lib/mathplusplus<span class="pl-pds">"</span></span>;
+<span class="pl-en">alert</span>(<span class="pl-s"><span class="pl-pds">"</span>2π = <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-en">ln</span>(e)<span class="pl-k">*</span>pi<span class="pl-k">*</span><span class="pl-c1">2</span>);</pre></div>
+
+<h3>
+<a id="module-loaders" class="anchor" href="#module-loaders" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Module Loaders</h3>
+
+<p>Module loaders support:</p>
+
+<ul>
+<li>Dynamic loading</li>
+<li>State isolation</li>
+<li>Global namespace isolation</li>
+<li>Compilation hooks</li>
+<li>Nested virtualization</li>
+</ul>
+
+<p>The default module loader can be configured, and new loaders can be constructed to evaluate and load code in isolated or constrained contexts.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Dynamic loading – ‘System’ is default loader</span>
+<span class="pl-smi">System</span>.<span class="pl-en">import</span>(<span class="pl-s"><span class="pl-pds">'</span>lib/math<span class="pl-pds">'</span></span>).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">m</span>) {
+  <span class="pl-en">alert</span>(<span class="pl-s"><span class="pl-pds">"</span>2π = <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">m</span>.<span class="pl-en">sum</span>(<span class="pl-smi">m</span>.<span class="pl-smi">pi</span>, <span class="pl-smi">m</span>.<span class="pl-smi">pi</span>));
+});
+
+<span class="pl-c">// Create execution sandboxes – new Loaders</span>
+<span class="pl-k">var</span> loader <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Loader</span>({
+  global<span class="pl-k">:</span> <span class="pl-en">fixup</span>(<span class="pl-c1">window</span>) <span class="pl-c">// replace ‘console.log’</span>
+});
+<span class="pl-smi">loader</span>.<span class="pl-en">eval</span>(<span class="pl-s"><span class="pl-pds">"</span>console.log('hello world!');<span class="pl-pds">"</span></span>);
+
+<span class="pl-c">// Directly manipulate module cache</span>
+<span class="pl-smi">System</span>.<span class="pl-en">get</span>(<span class="pl-s"><span class="pl-pds">'</span>jquery<span class="pl-pds">'</span></span>);
+<span class="pl-smi">System</span>.<span class="pl-en">set</span>(<span class="pl-s"><span class="pl-pds">'</span>jquery<span class="pl-pds">'</span></span>, <span class="pl-en">Module</span>({$<span class="pl-k">:</span> $})); <span class="pl-c">// WARNING: not yet finalized</span></pre></div>
+
+<h3>
+<a id="map--set--weakmap--weakset" class="anchor" href="#map--set--weakmap--weakset" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Map + Set + WeakMap + WeakSet</h3>
+
+<p>Efficient data structures for common algorithms.  WeakMaps provides leak-free object-key’d side tables.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Sets</span>
+<span class="pl-k">var</span> s <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Set</span>();
+<span class="pl-smi">s</span>.<span class="pl-c1">add</span>(<span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>).<span class="pl-c1">add</span>(<span class="pl-s"><span class="pl-pds">"</span>goodbye<span class="pl-pds">"</span></span>).<span class="pl-c1">add</span>(<span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>);
+<span class="pl-smi">s</span>.<span class="pl-c1">size</span> <span class="pl-k">===</span> <span class="pl-c1">2</span>;
+<span class="pl-smi">s</span>.<span class="pl-en">has</span>(<span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>) <span class="pl-k">===</span> <span class="pl-c1">true</span>;
+
+<span class="pl-c">// Maps</span>
+<span class="pl-k">var</span> m <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Map</span>();
+<span class="pl-smi">m</span>.<span class="pl-en">set</span>(<span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>, <span class="pl-c1">42</span>);
+<span class="pl-smi">m</span>.<span class="pl-en">set</span>(s, <span class="pl-c1">34</span>);
+<span class="pl-smi">m</span>.<span class="pl-en">get</span>(s) <span class="pl-k">==</span> <span class="pl-c1">34</span>;
+
+<span class="pl-c">// Weak Maps</span>
+<span class="pl-k">var</span> wm <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WeakMap</span>();
+<span class="pl-smi">wm</span>.<span class="pl-en">set</span>(s, { extra<span class="pl-k">:</span> <span class="pl-c1">42</span> });
+<span class="pl-smi">wm</span>.<span class="pl-c1">size</span> <span class="pl-k">===</span> <span class="pl-c1">undefined</span>
+
+<span class="pl-c">// Weak Sets</span>
+<span class="pl-k">var</span> ws <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">WeakSet</span>();
+<span class="pl-smi">ws</span>.<span class="pl-c1">add</span>({ data<span class="pl-k">:</span> <span class="pl-c1">42</span> });
+<span class="pl-c">// Because the added object has no other references, it will not be held in the set</span></pre></div>
+
+<h3>
+<a id="proxies" class="anchor" href="#proxies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Proxies</h3>
+
+<p>Proxies enable creation of objects with the full range of behaviors available to host objects.  Can be used for interception, object virtualization, logging/profiling, etc.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Proxying a normal object</span>
+<span class="pl-k">var</span> target <span class="pl-k">=</span> {};
+<span class="pl-k">var</span> handler <span class="pl-k">=</span> {
+  <span class="pl-en">get</span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">receiver</span>, <span class="pl-smi">name</span>) {
+    <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">`</span>Hello, <span class="pl-s1"><span class="pl-pse">${</span>name<span class="pl-pse">}</span></span>!<span class="pl-pds">`</span></span>;
+  }
+};
+
+<span class="pl-k">var</span> p <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Proxy</span>(target, handler);
+<span class="pl-smi">p</span>.<span class="pl-smi">world</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>Hello, world!<span class="pl-pds">'</span></span>;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Proxying a function object</span>
+<span class="pl-k">var</span> <span class="pl-en">target</span> <span class="pl-k">=</span> <span class="pl-k">function</span> () { <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>I am the target<span class="pl-pds">'</span></span>; };
+<span class="pl-k">var</span> handler <span class="pl-k">=</span> {
+  <span class="pl-en">apply</span><span class="pl-k">:</span> <span class="pl-k">function</span> (<span class="pl-smi">receiver</span>, ...<span class="pl-smi">args</span>) {
+    <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>I am the proxy<span class="pl-pds">'</span></span>;
+  }
+};
+
+<span class="pl-k">var</span> p <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Proxy</span>(target, handler);
+<span class="pl-en">p</span>() <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>I am the proxy<span class="pl-pds">'</span></span>;</pre></div>
+
+<p>There are traps available for all of the runtime-level meta-operations:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> handler <span class="pl-k">=</span>
+{
+  get<span class="pl-k">:</span><span class="pl-k">...</span>,
+  set<span class="pl-k">:</span><span class="pl-k">...</span>,
+  has<span class="pl-k">:</span><span class="pl-k">...</span>,
+  deleteProperty<span class="pl-k">:</span><span class="pl-k">...</span>,
+  apply<span class="pl-k">:</span><span class="pl-k">...</span>,
+  construct<span class="pl-k">:</span><span class="pl-k">...</span>,
+  getOwnPropertyDescriptor<span class="pl-k">:</span><span class="pl-k">...</span>,
+  defineProperty<span class="pl-k">:</span><span class="pl-k">...</span>,
+  getPrototypeOf<span class="pl-k">:</span><span class="pl-k">...</span>,
+  setPrototypeOf<span class="pl-k">:</span><span class="pl-k">...</span>,
+  enumerate<span class="pl-k">:</span><span class="pl-k">...</span>,
+  ownKeys<span class="pl-k">:</span><span class="pl-k">...</span>,
+  preventExtensions<span class="pl-k">:</span><span class="pl-k">...</span>,
+  isExtensible<span class="pl-k">:</span><span class="pl-k">...</span>
+}</pre></div>
+
+<h3>
+<a id="symbols" class="anchor" href="#symbols" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Symbols</h3>
+
+<p>Symbols enable access control for object state.  Symbols allow properties to be keyed by either <code>string</code> (as in ES5) or <code>symbol</code>.  Symbols are a new primitive type. Optional <code>description</code> parameter used in debugging - but is not part of identity.  Symbols are unique (like gensym), but not private since they are exposed via reflection features like <code>Object.getOwnPropertySymbols</code>.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> MyClass <span class="pl-k">=</span> (<span class="pl-k">function</span>() {
+
+  <span class="pl-c">// module scoped symbol</span>
+  <span class="pl-k">var</span> key <span class="pl-k">=</span> <span class="pl-c1">Symbol</span>(<span class="pl-s"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>);
+
+  <span class="pl-k">function</span> <span class="pl-en">MyClass</span>(<span class="pl-smi">privateData</span>) {
+    <span class="pl-v">this</span>[key] <span class="pl-k">=</span> privateData;
+  }
+
+  <span class="pl-c1">MyClass</span>.<span class="pl-c1">prototype</span> <span class="pl-k">=</span> {
+    <span class="pl-en">doStuff</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+      <span class="pl-k">...</span> <span class="pl-v">this</span>[key] <span class="pl-k">...</span>
+    }
+  };
+
+  <span class="pl-k">return</span> MyClass;
+})();
+
+<span class="pl-k">var</span> c <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">MyClass</span>(<span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>)
+c[<span class="pl-s"><span class="pl-pds">"</span>key<span class="pl-pds">"</span></span>] <span class="pl-k">===</span> <span class="pl-c1">undefined</span></pre></div>
+
+<h3>
+<a id="subclassable-built-ins" class="anchor" href="#subclassable-built-ins" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Subclassable Built-ins</h3>
+
+<p>In ES6, built-ins like <code>Array</code>, <code>Date</code> and DOM <code>Element</code>s can be subclassed.</p>
+
+<p>Object construction for a function named <code>Ctor</code> now uses two-phases (both virtually dispatched):</p>
+
+<ul>
+<li>Call <code>Ctor[@@create]</code> to allocate the object, installing any special behavior</li>
+<li>Invoke constructor on new instance to initialize</li>
+</ul>
+
+<p>The known <code>@@create</code> symbol is available via <code>Symbol.create</code>.  Built-ins now expose their <code>@@create</code> explicitly.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// Pseudo-code of Array</span>
+<span class="pl-k">class</span> <span class="pl-en">Array</span> {
+    <span class="pl-en">constructor</span>(...<span class="pl-smi">args</span>) { <span class="pl-c">/* ... */</span> }
+    <span class="pl-k">static</span> [<span class="pl-c1">Symbol</span>.<span class="pl-smi">create</span>]() {
+        <span class="pl-c">// Install special [[DefineOwnProperty]]</span>
+        <span class="pl-c">// to magically update 'length'</span>
+    }
+}
+
+<span class="pl-c">// User code of Array subclass</span>
+<span class="pl-k">class</span> <span class="pl-en">MyArray</span> <span class="pl-k">extends</span> <span class="pl-en">Array</span> {
+    <span class="pl-en">constructor</span>(...<span class="pl-smi">args</span>) { <span class="pl-v">super</span>(<span class="pl-k">...</span>args); }
+}
+
+<span class="pl-c">// Two-phase 'new':</span>
+<span class="pl-c">// 1) Call @@create to allocate object</span>
+<span class="pl-c">// 2) Invoke constructor on new instance</span>
+<span class="pl-k">var</span> arr <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">MyArray</span>();
+arr[<span class="pl-c1">1</span>] <span class="pl-k">=</span> <span class="pl-c1">12</span>;
+<span class="pl-smi">arr</span>.<span class="pl-c1">length</span> <span class="pl-k">==</span> <span class="pl-c1">2</span></pre></div>
+
+<h3>
+<a id="math--number--string--array--object-apis" class="anchor" href="#math--number--string--array--object-apis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Math + Number + String + Array + Object APIs</h3>
+
+<p>Many new library additions, including core Math libraries, Array conversion helpers, String helpers, and Object.assign for copying.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">Number</span>.<span class="pl-c1">EPSILON</span>
+<span class="pl-c1">Number</span>.<span class="pl-en">isInteger</span>(<span class="pl-c1">Infinity</span>) <span class="pl-c">// false</span>
+<span class="pl-c1">Number</span>.<span class="pl-en">isNaN</span>(<span class="pl-s"><span class="pl-pds">"</span>NaN<span class="pl-pds">"</span></span>) <span class="pl-c">// false</span>
+
+<span class="pl-c1">Math</span>.<span class="pl-en">acosh</span>(<span class="pl-c1">3</span>) <span class="pl-c">// 1.762747174039086</span>
+<span class="pl-c1">Math</span>.<span class="pl-en">hypot</span>(<span class="pl-c1">3</span>, <span class="pl-c1">4</span>) <span class="pl-c">// 5</span>
+<span class="pl-c1">Math</span>.<span class="pl-en">imul</span>(<span class="pl-c1">Math</span>.<span class="pl-c1">pow</span>(<span class="pl-c1">2</span>, <span class="pl-c1">32</span>) <span class="pl-k">-</span> <span class="pl-c1">1</span>, <span class="pl-c1">Math</span>.<span class="pl-c1">pow</span>(<span class="pl-c1">2</span>, <span class="pl-c1">32</span>) <span class="pl-k">-</span> <span class="pl-c1">2</span>) <span class="pl-c">// 2</span>
+
+<span class="pl-s"><span class="pl-pds">"</span>abcde<span class="pl-pds">"</span></span>.<span class="pl-en">includes</span>(<span class="pl-s"><span class="pl-pds">"</span>cd<span class="pl-pds">"</span></span>) <span class="pl-c">// true</span>
+<span class="pl-s"><span class="pl-pds">"</span>abc<span class="pl-pds">"</span></span>.<span class="pl-en">repeat</span>(<span class="pl-c1">3</span>) <span class="pl-c">// "abcabcabc"</span>
+
+<span class="pl-c1">Array</span>.<span class="pl-en">from</span>(<span class="pl-c1">document</span>.<span class="pl-en">querySelectorAll</span>(<span class="pl-s"><span class="pl-pds">'</span>*<span class="pl-pds">'</span></span>)) <span class="pl-c">// Returns a real Array</span>
+<span class="pl-c1">Array</span>.<span class="pl-en">of</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>) <span class="pl-c">// Similar to new Array(...), but without special one-arg behavior</span>
+[<span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>].<span class="pl-en">fill</span>(<span class="pl-c1">7</span>, <span class="pl-c1">1</span>) <span class="pl-c">// [0,7,7]</span>
+[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>].<span class="pl-c1">find</span>(x <span class="pl-k">=&gt;</span> x <span class="pl-k">==</span> <span class="pl-c1">3</span>) <span class="pl-c">// 3</span>
+[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>].<span class="pl-en">findIndex</span>(x <span class="pl-k">=&gt;</span> x <span class="pl-k">==</span> <span class="pl-c1">2</span>) <span class="pl-c">// 1</span>
+[<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>, <span class="pl-c1">4</span>, <span class="pl-c1">5</span>].<span class="pl-en">copyWithin</span>(<span class="pl-c1">3</span>, <span class="pl-c1">0</span>) <span class="pl-c">// [1, 2, 3, 1, 2]</span>
+[<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>].<span class="pl-en">entries</span>() <span class="pl-c">// iterator [0, "a"], [1,"b"], [2,"c"]</span>
+[<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>].<span class="pl-en">keys</span>() <span class="pl-c">// iterator 0, 1, 2</span>
+[<span class="pl-s"><span class="pl-pds">"</span>a<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>b<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>c<span class="pl-pds">"</span></span>].<span class="pl-en">values</span>() <span class="pl-c">// iterator "a", "b", "c"</span>
+
+<span class="pl-c1">Object</span>.<span class="pl-en">assign</span>(Point, { origin<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">Point</span>(<span class="pl-c1">0</span>,<span class="pl-c1">0</span>) })</pre></div>
+
+<h3>
+<a id="binary-and-octal-literals" class="anchor" href="#binary-and-octal-literals" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Binary and Octal Literals</h3>
+
+<p>Two new numeric literal forms are added for binary (<code>b</code>) and octal (<code>o</code>).</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">0b111110111</span> <span class="pl-k">===</span> <span class="pl-c1">503</span> <span class="pl-c">// true</span>
+<span class="pl-c1">0o767</span> <span class="pl-k">===</span> <span class="pl-c1">503</span> <span class="pl-c">// true</span></pre></div>
+
+<h3>
+<a id="promises" class="anchor" href="#promises" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Promises</h3>
+
+<p>Promises are a library for asynchronous programming.  Promises are a first class representation of a value that may be made available in the future.  Promises are used in many existing JavaScript libraries.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">timeout</span>(<span class="pl-smi">duration</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>) {
+    <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">Promise</span>((<span class="pl-smi">resolve</span>, <span class="pl-smi">reject</span>) <span class="pl-k">=&gt;</span> {
+        <span class="pl-c1">setTimeout</span>(resolve, duration);
+    })
+}
+
+<span class="pl-k">var</span> p <span class="pl-k">=</span> <span class="pl-en">timeout</span>(<span class="pl-c1">1000</span>).<span class="pl-en">then</span>(() <span class="pl-k">=&gt;</span> {
+    <span class="pl-k">return</span> <span class="pl-en">timeout</span>(<span class="pl-c1">2000</span>);
+}).<span class="pl-en">then</span>(() <span class="pl-k">=&gt;</span> {
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-en">Error</span>(<span class="pl-s"><span class="pl-pds">"</span>hmm<span class="pl-pds">"</span></span>);
+}).<span class="pl-en">catch</span>(err <span class="pl-k">=&gt;</span> {
+    <span class="pl-k">return</span> <span class="pl-smi">Promise</span>.<span class="pl-c1">all</span>([<span class="pl-en">timeout</span>(<span class="pl-c1">100</span>), <span class="pl-en">timeout</span>(<span class="pl-c1">200</span>)]);
+})</pre></div>
+
+<h3>
+<a id="reflect-api" class="anchor" href="#reflect-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reflect API</h3>
+
+<p>Full reflection API exposing the runtime-level meta-operations on objects.  This is effectively the inverse of the Proxy API, and allows making calls corresponding to the same meta-operations as the proxy traps.  Especially useful for implementing proxies.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// No sample yet</span></pre></div>
+
+<h3>
+<a id="tail-calls" class="anchor" href="#tail-calls" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tail Calls</h3>
+
+<p>Calls in tail-position are guaranteed to not grow the stack unboundedly.  Makes recursive algorithms safe in the face of unbounded inputs.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">factorial</span>(<span class="pl-smi">n</span>, <span class="pl-smi">acc</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>) {
+    <span class="pl-s"><span class="pl-pds">'</span>use strict<span class="pl-pds">'</span></span>;
+    <span class="pl-k">if</span> (n <span class="pl-k">&lt;=</span> <span class="pl-c1">1</span>) <span class="pl-k">return</span> acc;
+    <span class="pl-k">return</span> <span class="pl-en">factorial</span>(n <span class="pl-k">-</span> <span class="pl-c1">1</span>, n <span class="pl-k">*</span> acc);
+}
+
+<span class="pl-c">// Stack overflow in most implementations today,</span>
+<span class="pl-c">// but safe on arbitrary inputs in ES6</span>
+<span class="pl-en">factorial</span>(<span class="pl-c1">100000</span>)</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/duyetdev-collections/es6features">Es6features</a> is maintained by <a href="https://github.com/duyetdev-collections">duyetdev-collections</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
